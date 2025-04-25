@@ -1,0 +1,22 @@
+apiVersion: skaffold/v2beta29
+kind: Config
+metadata:
+  name: platform
+build:
+  tagPolicy:
+    sha256: {}
+  artifacts:
+  - image: localhost:32000/custom-keycloak
+    custom:
+      buildCommand: podman build -f /vagrant/idp-service/Dockerfile -t $IMAGE; podman push $IMAGE
+
+deploy:
+  helm:
+    releases:
+    - name: keycloak-custom
+      chartPath: /vagrant/idp-service/chart
+      namespace: idp
+      valuesFiles:
+        - /vagrant/idp-service/chart/values.yaml
+      wait: true
+      createNamespace: true
