@@ -1,0 +1,4 @@
+apiVersion: v1
+description: Authentication and Authorization using Keycloak
+name: keycloak-custom
+version: 0.0.1
