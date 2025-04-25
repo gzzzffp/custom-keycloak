@@ -1,0 +1,25 @@
+idpHost: authn.iam.zz
+namespace: idp
+clusterIPs:
+    - ip: 192.168.33.44
+      hostAliases:
+        - authz.iam.zz
+        - authn.iam.zz
+keycloak:
+  imageKey:
+    registry: localhost:32000
+    repository: custom-keycloak
+    tag: latest
+  user: admin
+  password: admin
+  hostUrl: https://authn.iam.zz/
+  hostAdminUrl: https://authn.iam.zz/
+  authn:
+    port: 8080
+    name: custom-idp
+  db:
+    vendor: mysql
+    authn:
+      url: jdbc:mysql://10.0.1.1:3306/kc_authn_01_db
+      user: kc_authn_u01
+      password: password
