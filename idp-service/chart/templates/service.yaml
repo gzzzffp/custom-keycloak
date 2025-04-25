@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.keycloak.authn.name }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.keycloak.authn.name }}
+spec:
+  ports:
+  - port: {{ .Values.keycloak.authn.port }}
+    name: http
+    protocol: TCP
+  selector:
+    app: {{ .Values.keycloak.authn.name }}
