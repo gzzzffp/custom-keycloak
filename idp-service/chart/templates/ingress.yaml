@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: idp-ingress
+  namespace: {{ .Values.namespace }}
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  ingressClassName: nginx
+  tls:
+    - secretName: {{ .Values.tlsSecretName }}
+  rules:
+    - host: {{ .Values.idpHost }}
+      http:
+        paths:
+          - pathType: Prefix
+            path: /(.*)
+            backend:
+              service:
+                name: {{ .Values.keycloak.authn.name }}
+                port:
+                  number: {{ .Values.keycloak.authn.port }}
